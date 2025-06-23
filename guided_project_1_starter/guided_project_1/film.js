@@ -61,8 +61,8 @@ const renderFilm = film => {
   episodeSpan.textContent = film?.episode_id;
 //   homeworldSpan.innerHTML = `<a href="/planet.html?id=${character?.homeworld.id}">${character?.homeworld.name}</a>`;
 console.log(film.characters);
-  const characterLis = film?.characters?.map(character => `<li><a href="/character.html?id=${character.id}">${character.name}</li>`)
-  const planetsLis = film?.planets?.map(planet => `<li><a href="/character.html?id=${planet.id}">${planet.name}</li>`)
+  const characterLis = film?.characters?.map(character => `<li><a href="/film.html?id=${character.id}">${character.name}</li>`)
+  const planetsLis = film?.planets?.map(planet => `<li><a href="/film.html?id=${planet.id}">${planet.name}</li>`)
   charactersUl.innerHTML = characterLis.join("");
   planetsUl.innerHTML = planetsLis.join("");
 }
