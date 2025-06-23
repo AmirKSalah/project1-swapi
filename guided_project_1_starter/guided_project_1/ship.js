@@ -34,6 +34,7 @@ async function getShip(id) {
     captainMap.set(15, 4);
     captainMap.set(10, 14);
     captainMap.set(21, 22);
+    captainMap.set(12, 1);
     console.log(ship)
     captainId = captainMap.get(ship.id)
     ship.captain = await fetchCaptain(captainId)
