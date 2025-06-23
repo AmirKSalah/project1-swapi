@@ -20,6 +20,13 @@ p {
   color: var(--dark1);
 }
 
+body {
+  background-image: url('images/hyperspace_image_from_chat_gpt.png');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+}
+
 button {
   background-color: var(--light2);
   color: var(--dark2);
