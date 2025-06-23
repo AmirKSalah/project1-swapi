@@ -95,6 +95,7 @@ const renderShip = ship => {
   captainMap.set(2, 5);
   console.log(ship)
   captainId = captainMap.get(ship.id)
+  console
   captain = fetchCaptain(captainId)
 
     console.log(captain)
