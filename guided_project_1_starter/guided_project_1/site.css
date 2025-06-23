@@ -8,10 +8,13 @@ h5,
 p {
   margin: 0;
   padding: 0;
+
 }
+@import url('https://fonts.cdnfonts.com/css/star-wars');
+
 
 :root {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Orbitron", Helvetica, sans-serif;
   --dark1: rgb(214, 201, 84);
   --light1: rgb(8, 8, 8);
   --dark2: rgb(0, 10, 54);

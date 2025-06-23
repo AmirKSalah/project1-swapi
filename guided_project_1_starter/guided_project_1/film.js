@@ -6,6 +6,7 @@ let filmsDiv;
 let planetDiv;
 const baseUrl = `http://localhost:9001/api`;
 
+
 // Runs on page load
 addEventListener('DOMContentLoaded', () => {
   title = document.querySelector('h1#title');
