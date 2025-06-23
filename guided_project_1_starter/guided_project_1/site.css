@@ -12,9 +12,9 @@ p {
 
 :root {
   font-family: Arial, Helvetica, sans-serif;
-  --dark1: black;
-  --light1: white;
-  --dark2: darkblue;
+  --dark1: rgb(214, 201, 84);
+  --light1: rgb(8, 8, 8);
+  --dark2: rgb(0, 10, 54);
   --light2: lightblue;
   background-color: var(--light1);
   color: var(--dark1);
