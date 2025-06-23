@@ -24,6 +24,7 @@ body {
   background-image: url('images/hyperspace_image_from_chat_gpt.png');
   background-size: cover;
   background-position: center;
+  min-height: 100vh;
 }
 
 button {
