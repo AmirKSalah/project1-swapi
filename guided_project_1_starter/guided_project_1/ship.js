@@ -15,7 +15,7 @@ addEventListener('DOMContentLoaded', () => {
   manufacturerSpan = document.querySelector('span#manufacturer');
 
   crewUl = document.querySelector('#characters>ul');
-  captainUl = document.querySelector('#captain>ul')
+  captainUl = document.querySelector('#planets>ul')
   const sp = new URLSearchParams(window.location.search)
   const id = sp.get('id')
   getShip(id)
@@ -28,7 +28,17 @@ async function getShip(id) {
     console.log(ship);
     ship.crew = await fetchCrew(ship)
     ship.transports = await fetchTransports(ship);
- 
+    console.log(ship.transports)
+    const captainMap = new Map();
+    captainMap.set(2, 5);
+    captainMap.set(15, 4);
+    captainMap.set(10, 14);
+    captainMap.set(21, 22);
+    console.log(ship)
+    captainId = captainMap.get(ship.id)
+    ship.captain = await fetchCaptain(captainId)
+    console.log(ship.captain)
+
   }
   catch (ex) {
     console.error(`Error reading film ${id} data.`, ex.message);
@@ -57,8 +67,6 @@ async function fetchCrew(ship) {
     return crew
 
 
-
-
 }
 
 async function fetchPlanets(film) {
@@ -69,7 +77,7 @@ async function fetchPlanets(film) {
 }
 
 async function fetchCaptain(captainId) {
-    const captain = fetch(`${baseUrl}/characters/${captainId}`)
+    const captain = await fetch(`${baseUrl}/characters/${captainId}`)
     .then(res => res.json())
     return captain
   }
@@ -91,16 +99,10 @@ const renderShip = ship => {
 
   const crewLis = ship?.crew?.map(character => `<li><a href="/character.html?id=${character.id}">${character.name}</li>`)
   crewUl.innerHTML = crewLis.join("");
-  const captainMap = new Map();
-  captainMap.set(2, 5);
-  console.log(ship)
-  captainId = captainMap.get(ship.id)
-  console
-  captain = fetchCaptain(captainId)
 
-    console.log(captain)
+    console.log(ship.captain)
 
 
-  captainUl.innerHTML = `<a href="/character.html?id=${captain?.id}">${captain?.name}</a>`;
+  captainUl.innerHTML = `<li><a href="/character.html?id=${ship.captain?.id}">${ship.captain?.name}</a></li>`;
 //   captainUl.innerHTML = captainMap.get(ship.id)
 }

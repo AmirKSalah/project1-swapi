@@ -96,7 +96,7 @@ h1#name {
 section#planets,
 section#characters,
 section#films,
-section #captain {
+section#captain {
   margin: 50px;
 }
 
@@ -111,7 +111,7 @@ section#captain ul {
 section#planets a,
 section#characters a,
 section#films a,
-section #captain a {
+section#captain a {
   display: inline-block;
   text-decoration: none;
   font-size: 1.1em;
