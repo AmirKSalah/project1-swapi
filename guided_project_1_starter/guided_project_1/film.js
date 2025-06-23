@@ -14,6 +14,7 @@ addEventListener('DOMContentLoaded', () => {
   episodeSpan = document.querySelector('span#episode_id');
   planetsSpan = document.querySelector('span#planets');
   charactersUl = document.querySelector('#characters>ul');
+  planetsUl = document.querySelector('#planets>ul')
   const sp = new URLSearchParams(window.location.search)
   const id = sp.get('id')
   getFilm(id)
@@ -58,7 +59,10 @@ const renderFilm = film => {
   releaseDateSpan.textContent = film?.release_date;
   directorSpan.textContent = film?.director;
   episodeSpan.textContent = film?.episode_id;
-  homeworldSpan.innerHTML = `<a href="/planet.html?id=${character?.homeworld.id}">${character?.homeworld.name}</a>`;
-  const filmsLis = character?.films?.map(film => `<li><a href="/film.html?id=${film.id}">${film.title}</li>`)
-  filmsUl.innerHTML = filmsLis.join("");
+//   homeworldSpan.innerHTML = `<a href="/planet.html?id=${character?.homeworld.id}">${character?.homeworld.name}</a>`;
+console.log(film.characters);
+  const characterLis = film?.characters?.map(character => `<li><a href="/character.html?id=${character.id}">${character.name}</li>`)
+  const planetsLis = film?.planets?.map(planet => `<li><a href="/character.html?id=${planet.id}">${planet.name}</li>`)
+  charactersUl.innerHTML = characterLis.join("");
+  planetsUl.innerHTML = planetsLis.join("");
 }
