@@ -12,8 +12,9 @@ addEventListener('DOMContentLoaded', () => {
   gravitySpan = document.querySelector('span#gravity');
   terrainSpan = document.querySelector('span#terrain');
   climateSpan = document.querySelector('span#climate');
-  homeworldSpan = document.querySelector('span#homeworld');
+  
   filmsUl = document.querySelector('#films>ul');
+  charactersUl = document.querySelector('#characters>ul');
   const sp = new URLSearchParams(window.location.search)
   const id = sp.get('id')
   getPlanet(id)
@@ -25,6 +26,7 @@ async function getPlanet(id) {
     planet = await fetchPlanet(id)
     planet.homeworld = await fetchPlanet(planet)
     planet.films = await fetchFilms(planet)
+    planet.characters = await fetchCharacters(planet)
   }
   catch (ex) {
     console.error(`Error reading planet ${id} data.`, ex.message);
@@ -39,7 +41,7 @@ async function fetchPlanet(id) {
 }
 
 async function fetchCharacters(planet) {
-  const url = `${baseUrl}/planets/${planet?.characters}`;
+  const url = `${baseUrl}/planets/${planet?.id}/characters`;
   const characters = await fetch(url)
     .then(res => res.json())
   return characters;
@@ -53,12 +55,14 @@ async function fetchFilms(planet) {
 }
 
 const renderPlanet = planet => {
+  console.log(characters);
   document.title = `SWAPI - ${planet?.name}`;  // Just to make the browser tab say their name
   nameH1.textContent = planet?.name;
-  climateSpan.textContent = planet?.climate;
+  climateSpan.textContent = planet?.climate
   terrainSpan.textContent = planet?.terrain;
   gravitySpan.textContent = planet?.gravity;
-  homeworldSpan.innerHTML = `<a href="/planet.html?id=${planet?.homeworld.id}">${planet?.homeworld.name}</a>`;
-  const filmsLis = planet?.films?.map(film => `<li><a href="/film.html?id=${film.id}">${film.title}</li>`)
+  const filmsLis = planet?.films?.map(film => `<li><a href="/film.html?id=${film.id}">${film.title}</li>`);
+  const charactersLis = planet?.characters?.map(characters => `<li><a href="/character.html?id=${characters.id}">${characters.name}</a></li>`)
   filmsUl.innerHTML = filmsLis.join("");
+  charactersUl.innerHTML = charactersLis ? charactersLis.join("") : "";
 }
