@@ -5,6 +5,7 @@ let terrainSpan;
 let filmsDiv;
 let planetDiv;
 const baseUrl = `http://localhost:9001/api`;
+const PLANETS_STORAGE_KEY = 'planets';
 
 // Runs on page load
 addEventListener('DOMContentLoaded', () => {
@@ -28,6 +29,7 @@ async function getPlanet(id) {
   if (cachedPlanet) {
     // If planet data exists in localStorage, use it
     planet = JSON.parse(cachedPlanet);
+    renderPlanet(planet);
   } else {
   try {
     planet = await fetchPlanet(id);
@@ -36,17 +38,17 @@ async function getPlanet(id) {
     planet.characters = await fetchCharacters(planet);
 
     // Save only the ID and Name of the planet to localStorage
-    localStorage.setItem(`planet_${id}`, JSON.stringify({
-      id: planet.id,
-      name: planet.name
-    }));
+    localStorage.setItem(`planet_${id}`, JSON.stringify(planet));
+    renderPlanet(planet);
   } catch (ex) {
     console.error(`Error reading planet ${id} data.`, ex.message);
   }
-  renderPlanet(planet);
+  
   }
 }
+
 async function fetchPlanet(id) {
+
   let planetUrl = `${baseUrl}/planets/${id}`;
   return await fetch(planetUrl)
     .then(res => res.json())
