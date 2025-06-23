@@ -5,6 +5,7 @@ let terrainSpan;
 let filmsDiv;
 let planetDiv;
 const baseUrl = `http://localhost:9001/api`;
+const PLANETS_STORAGE_KEY = 'planets';
 
 // Runs on page load
 addEventListener('DOMContentLoaded', () => {
@@ -12,29 +13,42 @@ addEventListener('DOMContentLoaded', () => {
   gravitySpan = document.querySelector('span#gravity');
   terrainSpan = document.querySelector('span#terrain');
   climateSpan = document.querySelector('span#climate');
-  
   filmsUl = document.querySelector('#films>ul');
   charactersUl = document.querySelector('#characters>ul');
+
   const sp = new URLSearchParams(window.location.search)
   const id = sp.get('id')
+
   getPlanet(id)
 });
 
 async function getPlanet(id) {
   let planet;
+
+  const cachedPlanet = localStorage.getItem(`planet_${id}`);
+  if (cachedPlanet) {
+    // If planet data exists in localStorage, use it
+    planet = JSON.parse(cachedPlanet);
+    renderPlanet(planet);
+  } else {
   try {
-    planet = await fetchPlanet(id)
-    planet.homeworld = await fetchPlanet(planet)
-    planet.films = await fetchFilms(planet)
-    planet.characters = await fetchCharacters(planet)
-  }
-  catch (ex) {
+    planet = await fetchPlanet(id);
+    planet.homeworld = await fetchPlanet(planet);
+    planet.films = await fetchFilms(planet);
+    planet.characters = await fetchCharacters(planet);
+
+    // Save only the ID and Name of the planet to localStorage
+    localStorage.setItem(`planet_${id}`, JSON.stringify(planet));
+    renderPlanet(planet);
+  } catch (ex) {
     console.error(`Error reading planet ${id} data.`, ex.message);
   }
-  renderPlanet(planet);
-
+  
+  }
 }
+
 async function fetchPlanet(id) {
+
   let planetUrl = `${baseUrl}/planets/${id}`;
   return await fetch(planetUrl)
     .then(res => res.json())
@@ -55,7 +69,6 @@ async function fetchFilms(planet) {
 }
 
 const renderPlanet = planet => {
-  console.log(characters);
   document.title = `SWAPI - ${planet?.name}`;  // Just to make the browser tab say their name
   nameH1.textContent = planet?.name;
   climateSpan.textContent = planet?.climate
